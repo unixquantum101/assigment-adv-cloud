@@ -1,0 +1,35 @@
+# Local development: `docker compose up --build` -> http://localhost:8080
+services:
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on: [web, api]
+    networks: [appnet]
+
+  web:
+    build: ./services/web
+    environment:
+      API_URL: http://api:5000
+    networks: [appnet]
+
+  api:
+    build: ./services/api
+    environment:
+      REDIS_HOST: redis
+    depends_on: [redis]
+    networks: [appnet, datanet]
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks: [datanet]
+
+volumes:
+  redis_data:
+
+networks:
+  appnet:
+  datanet:

@@ -1,0 +1,77 @@
+# Deployed by Jenkins on the Swarm manager:
+#   REGISTRY_USER=<dockerhub-user> TAG=<build>-<sha> docker stack deploy --with-registry-auth -c docker-stack.yml cc
+#
+# Request path:  user -> nginx (port 80, routing mesh, on every node)
+#                     -> web / api via Swarm service VIPs (overlay network `appnet`)
+#                     -> redis (private overlay network `datanet`)
+
+version: "3.8"
+
+x-rolling-update: &rolling_update
+  parallelism: 1
+  delay: 10s
+  order: start-first
+  failure_action: rollback
+  monitor: 15s
+
+x-restart: &restart
+  condition: on-failure
+  delay: 5s
+  max_attempts: 3
+  window: 30s
+
+services:
+  nginx:
+    image: ${REGISTRY_USER}/cc-nginx:${TAG}
+    ports:
+      - "80:80"
+    networks: [appnet]
+    deploy:
+      mode: global                 # one nginx per node: any node's public IP works
+      restart_policy: *restart
+      update_config: *rolling_update
+
+  web:
+    image: ${REGISTRY_USER}/cc-web:${TAG}
+    environment:
+      API_URL: http://api:5000     # service name -> VIP -> load-balanced across api tasks
+    networks: [appnet]
+    deploy:
+      replicas: 2
+      restart_policy: *restart
+      update_config: *rolling_update
+      resources:
+        limits: { cpus: "0.50", memory: 192M }
+
+  api:
+    image: ${REGISTRY_USER}/cc-api:${TAG}
+    environment:
+      REDIS_HOST: redis
+    networks: [appnet, datanet]
+    deploy:
+      replicas: 3
+      restart_policy: *restart
+      update_config: *rolling_update
+      resources:
+        limits: { cpus: "0.50", memory: 192M }
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis_data:/data
+    networks: [datanet]
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]   # keeps the data volume on one known node
+      restart_policy: *restart
+
+volumes:
+  redis_data:
+
+networks:
+  appnet:
+    driver: overlay
+  datanet:
+    driver: overlay

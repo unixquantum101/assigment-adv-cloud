@@ -1,0 +1,22 @@
+# secrets
+*.pem
+*.key
+.env
+terraform.tfvars
+*.auto.tfvars
+.aws/
+~/.ssh/
+# terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+tfplan
+# build / python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+junit.xml
+*.log
+.DS_Store
