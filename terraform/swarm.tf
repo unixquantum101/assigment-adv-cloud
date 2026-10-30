@@ -30,6 +30,6 @@ resource "terraform_data" "swarm_join" {
 
   provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
-    command     = "${path.module}/join-worker.sh '${pathexpand(var.private_key_path)}' '${aws_eip.manager.public_ip}' '${aws_instance.worker[count.index].public_ip}' '${aws_instance.manager.private_ip}'"
+       command     = "bash ${path.module}/join-worker.sh '${pathexpand(var.private_key_path)}' '${aws_eip.manager.public_ip}' '${aws_instance.worker[count.index].public_ip}' '${aws_instance.manager.private_ip}'"
   }
 }
