@@ -30,7 +30,7 @@ def create_app(fetch=fetch_hits):
 <style>body{{font-family:system-ui,sans-serif;max-width:38rem;margin:3rem auto;line-height:1.6}}
 code{{background:#eef2f5;padding:.1rem .35rem;border-radius:4px}}</style></head>
 <body>
-<h1>Cloud Computing Project</h1>
+<h1>Cloud Computing Project v2</h1>
 <p>GitHub &rarr; Jenkins &rarr; Docker Hub &rarr; Docker Swarm on EC2 (Terraform)</p>
 <p>{line}</p>
 <p>Web container: <code>{socket.gethostname()}</code> &middot; version <code>{APP_VERSION}</code></p>
