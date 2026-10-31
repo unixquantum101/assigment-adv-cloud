@@ -2,7 +2,7 @@
 
 **Name:** _Seng Kimoun_  **Course:** Cloud Computing  **Date:** _31-10-2026_
 **Repository:**https://github.com/unixquantum101/assigment-adv-cloud.git
-**Live deployment:** http://_MANAGER_ELASTIC_IP_  (nginx load balancer, served by a 3-node Docker Swarm on EC2)
+**Live deployment:**​ http://3.1.115.106/ (nginx load balancer, served by a 3-node Docker Swarm on EC2)
 
 ## 1. What this project is
 
