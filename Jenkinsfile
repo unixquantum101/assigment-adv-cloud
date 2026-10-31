@@ -77,7 +77,7 @@ pipeline {
 
     stage('Push to Docker Hub') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',
+        withCredentials([usernamePassword(credentialsId: 'dockerhub',
                                           usernameVariable: 'DH_USER',
                                           passwordVariable: 'DH_PASS')]) {
           sh '''
@@ -94,7 +94,7 @@ pipeline {
       steps {
         withCredentials([
           sshUserPrivateKey(credentialsId: 'swarm-manager-ssh', keyFileVariable: 'SSH_KEY'),
-          usernamePassword(credentialsId: 'dockerhub-creds',
+          usernamePassword(credentialsId: 'dockerhub',
                            usernameVariable: 'DH_USER',
                            passwordVariable: 'DH_PASS')
         ]) {

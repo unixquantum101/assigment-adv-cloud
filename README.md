@@ -1,7 +1,7 @@
 # Cloud Computing Capstone — GitHub · Jenkins · Terraform · Docker · Docker Swarm · EC2
 
-**Name:** _YOUR NAME_  **Course:** Cloud Computing  **Date:** _DATE_
-**Repository:** https://github.com/unixquantum101/_REPO-NAME_
+**Name:** _Seng Kimoun_  **Course:** Cloud Computing  **Date:** _31-10-2026_
+**Repository:**https://github.com/unixquantum101/assigment-adv-cloud.git
 **Live deployment:** http://_MANAGER_ELASTIC_IP_  (nginx load balancer, served by a 3-node Docker Swarm on EC2)
 
 ## 1. What this project is
