@@ -33,7 +33,7 @@ def test_info_reports_hostname():
 
 def test_hits_counts_up():
     client = create_app(FakeCache()).test_client()
-    assert client.get("/api/hits").get_json()["hits"] == 1
+    assert client.get("/api/hits").get_json()["hits"] == 99
     assert client.get("/api/hits").get_json()["hits"] == 2
 
 
