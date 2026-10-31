@@ -17,8 +17,8 @@ pipeline {
 
   environment {
     // ---- EDIT THESE TWO VALUES ------------------------------------------
-    REGISTRY_USER = 'your-dockerhub-username'
-    SWARM_MANAGER = 'ubuntu@MANAGER_ELASTIC_IP'     // terraform output manager_public_ip
+    REGISTRY_USER = 'unixquantum'
+    SWARM_MANAGER = 'ubuntu@3.1.115.106'     // terraform output manager_public_ip
     // ---------------------------------------------------------------------
     STACK_NAME    = 'cc'
   }
