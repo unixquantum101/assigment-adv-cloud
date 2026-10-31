@@ -104,9 +104,7 @@ ssh -i ~/.ssh/cc-project ubuntu@<manager-ip> "docker node ls"     # 3 nodes, all
 
 Teardown when finished grading: `terraform destroy`.
 
-**Security and state notes:** only your IP can reach SSH; HTTP is open to the world; swarm ports 2377/7946/4789
-are allowed only between members of the same security group; no credentials or AMI IDs are written in the
-`.tf` files (the AMI is looked up with a data source); key files and `*.tfstate` are in `.gitignore`.
+SSH (22) is open to 0.0.0.0/0 because the administrator works from a mobile hotspot whose public IP changes constantly. Access is key-pair only: no passwords exist on the instances and the private key is never committed. HTTP (80) is open to the world for the application; swarm ports 2377/7946/4789 are allowed only between members of the cluster’s security group. In a production setup SSH would be restricted to a fixed address or replaced by AWS Systems Manager Session Manager.
 
 ## 6. CI/CD (Jenkins)
 

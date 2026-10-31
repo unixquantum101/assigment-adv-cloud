@@ -39,12 +39,12 @@ variable "subnet_cidr" {
 }
 
 variable "admin_cidr" {
-  description = "Your public IP in CIDR form (e.g. 203.0.113.7/32). Only this address may SSH in."
+  description = "CIDR allowed to reach SSH (port 22). Use 0.0.0.0/0 for anywhere, or your IP/32 to restrict."
   type        = string
 
   validation {
-    condition     = can(cidrhost(var.admin_cidr, 0)) && var.admin_cidr != "0.0.0.0/0"
-    error_message = "admin_cidr must be a valid CIDR and must not be 0.0.0.0/0."
+    condition     = can(cidrhost(var.admin_cidr, 0))
+    error_message = "admin_cidr must be a valid CIDR such as 203.0.113.7/32 or 0.0.0.0/0."
   }
 }
 

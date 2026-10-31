@@ -124,14 +124,18 @@ pipeline {
     always {
       sh 'docker logout || true'
       script {
-        def ok   = (currentBuild.currentResult == 'SUCCESS')
+        def ok = (currentBuild.currentResult == 'SUCCESS')
         env.TG_TEXT = (ok ? '✅ SUCCESS' : '❌ FAILED') +
                       "\nJob: ${env.JOB_NAME}\nBuild: #${env.BUILD_NUMBER}\nTag: ${env.TAG ?: 'n/a'}\n${env.BUILD_URL}"
-        withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TG_TOKEN'),
-                         string(credentialsId: 'telegram-chat-id',  variable: 'TG_CHAT')]) {
-          sh '''
-            curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" -d chat_id="${TG_CHAT}" --data-urlencode "text=${TG_TEXT}" > /dev/null || true
-          '''
+        try {
+          withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TG_TOKEN'),
+                           string(credentialsId: 'telegram-chat-id',  variable: 'TG_CHAT')]) {
+            sh '''
+              curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" -d chat_id="${TG_CHAT}" --data-urlencode "text=${TG_TEXT}" > /dev/null || true
+            '''
+          }
+        } catch (err) {
+          echo "Telegram notification skipped: ${err.getMessage()}"
         }
       }
     }
