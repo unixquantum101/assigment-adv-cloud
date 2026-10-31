@@ -1,5 +1,5 @@
 # Copy to terraform.tfvars (git-ignored) and edit.
 region           = "ap-southeast-1"
-admin_cidr       = "203.0.113.7/32"   # your public IP: curl -s ifconfig.me
-public_key_path  = "~/.ssh/cc-project.pub"
-private_key_path = "~/.ssh/cc-project"
+admin_cidr       = "0.0.0.0/0"   # your public IP: curl -s ifconfig.me
+public_key_path  = "/home/dudu/aws-key-asia.pub"
+private_key_path = "/home/dudu/aws-key-asia.pem"
