@@ -64,7 +64,7 @@ without manual steps:
 ├── docker-compose.yml  # local development (one command)
 ├── docker-stack.yml    # Swarm stack (replicas, restart_policy, update_config)
 ├── Jenkinsfile         # pipeline as code
-└── docs/               # report
+└── docs/               # REPORT and Screenshots
 ```
 
 ## 4. Run locally (Docker Compose)
